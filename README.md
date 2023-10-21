@@ -4,11 +4,10 @@
 
 
 ### Features
- 1. User Authentication: Secure user authentication system to ensure that only authorized users can access the application.
+ >1. User Authentication: Secure user authentication system to ensure that only authorized users can access the application.
+ >2. Data Upload: Users can upload data in JSON, CSV, or Excel formats using a simple and intuitive user interface.
 
- 2. Data Upload: Users can upload data in JSON, CSV, or Excel formats using a simple and intuitive user interface.
-
- 3. Table View: The uploaded data is presented in a table format, making it easy to view, filter, and sort the information.
+ >3. Table View: The uploaded data is presented in a table format, making it easy to view, filter, and sort the information.
  
 
 
