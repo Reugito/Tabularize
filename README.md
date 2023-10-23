@@ -8,7 +8,21 @@
  >2. Data Upload: Users can upload data in JSON, CSV, or Excel formats using a simple and intuitive user interface.
 
  >3. Table View: The uploaded data is presented in a table format, making it easy to view, filter, and sort the information.
- 
+
+### Setup DB Details in /src/main/resources/application.properties
+>1. Postgresql should be up and running in your local and add related config details in mentioned file to run application
+
+
+```bash
+  example 
+  spring.datasource.url=jdbc:postgresql://localhost:5432/tabularizeapp
+  spring.datasource.username=admin
+  spring.datasource.password=admin
+```
+
+### Run Application
+>1. after setup run the application from with main from TabularizeApplication.java 
+
 
 
 
