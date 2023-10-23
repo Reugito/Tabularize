@@ -50,7 +50,7 @@ public class ReportService {
 				throw new CustomException("Authentication Failed");
 			}
 
-			return reportRepo.findAll();
+			return reportRepo.findAllByCreatedBy(emailId);
 
 		} catch (Exception e) {
 			throw e;
@@ -74,11 +74,11 @@ public class ReportService {
 
 			if (originalFilename != null) {
 				if (originalFilename.endsWith(".csv")) {
-					parseCSV(file);
+					parseCSV(file, emailId);
 				} else if (originalFilename.endsWith(".xlsx")) {
-					parseExcel(file);
+					parseExcel(file, emailId);
 				} else if (originalFilename.endsWith(".json")) {
-					parseJSON(file);
+					parseJSON(file, emailId);
 				}
 			}
 		} catch (Exception e) {
@@ -87,13 +87,13 @@ public class ReportService {
 		}
 	}
 
-	private void parseCSV(MultipartFile file) {
+	private void parseCSV(MultipartFile file, String emailId) {
 		try (CSVReader csvReader = new CSVReader(new InputStreamReader(file.getInputStream()))) {
 			List<Report> reports = new ArrayList<>();
 			List<String[]> tableData = csvReader.readAll();
 			for (String[] row : tableData) {
 				if (row.length >= 3) { // Ensure at least 3 columns in CSV (userId, title, body)
-					Report report = new Report(row[0], row[1], row[2], row[3]);
+					Report report = new Report(row[0], row[1], row[2], row[3], emailId);
 					reports.add(report);
 				}
 			}
@@ -104,14 +104,14 @@ public class ReportService {
 		}
 	}
 
-	private void parseExcel(MultipartFile file) {
+	private void parseExcel(MultipartFile file, String emailId) {
 		try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
 			Sheet sheet = workbook.getSheetAt(0);
 			List<Report> reports = new ArrayList<>();
 			for (Row row : sheet) {
 				if (row.getPhysicalNumberOfCells() >= 3) {
 					Report report = new Report(row.getCell(0).getStringCellValue(), row.getCell(1).getStringCellValue(),
-							row.getCell(2).getStringCellValue(), row.getCell(3).getStringCellValue());
+							row.getCell(2).getStringCellValue(), row.getCell(3).getStringCellValue(), emailId);
 					reports.add(report);
 				}
 			}
@@ -122,7 +122,7 @@ public class ReportService {
 		}
 	}
 
-	private void parseJSON(MultipartFile file) {
+	private void parseJSON(MultipartFile file, String emailId) {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
 			List<Report> reports = new ArrayList<>();
@@ -133,7 +133,7 @@ public class ReportService {
 			for (Map<String, Object> data : jsonData) {
 				if (data.containsKey("userId") && data.containsKey("title") && data.containsKey("body")) {
 					Report report = new Report(data.get("id").toString(), data.get("userId").toString(),
-							data.get("title").toString(), data.get("body").toString());
+							data.get("title").toString(), data.get("body").toString(), emailId);
 					reports.add(report);
 				}
 			}

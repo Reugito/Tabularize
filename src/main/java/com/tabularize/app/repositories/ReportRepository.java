@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.tabularize.app.model.Report;
 
 public interface ReportRepository extends JpaRepository<Report, String> {
-	List<Report> findAll();
+	List<Report> findAllByCreatedBy(String createdBy);
 }

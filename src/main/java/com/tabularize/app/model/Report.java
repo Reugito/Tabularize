@@ -25,13 +25,16 @@ public class Report {
     private String title;
     
     private String body;
+    
+    private String createdBy;
 
-	public Report(String id, String userId, String title, String body) {
+	public Report(String id, String userId, String title, String body, String createdBy) {
 		super();
 		this.id = id;
 		this.userId = userId;
 		this.title = title;
 		this.body = body;
+		this.setCreatedBy(createdBy);
 	}
 
 	public Report() {
@@ -76,6 +79,14 @@ public class Report {
 
 	public void setBody(String body) {
 		this.body = body;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 	
 	
